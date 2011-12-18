@@ -6,13 +6,13 @@ class AnalyticsComponent extends Object {
 	var $controller = null;
 
 	//called before Controller::beforeFilter()
-	function initialize(&$controller, $settings = array()) {
-		if (count($settings)>1) {
+	function initialize(&$controller, $settings = null) {
+		if (is_array($settings)) {
 			$this->propertyID = $settings['id'];
 			unset($settings['id']);
 			$this->stack = $settings;
 		} else {
-			$this->propertyID = $settings[0];
+			$this->propertyID = $settings;
 		}
 		$this->controller = &$controller;
 		$this->_attachHelper();
