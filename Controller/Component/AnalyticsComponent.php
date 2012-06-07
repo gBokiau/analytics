@@ -1,5 +1,5 @@
 <?php
-class AnalyticsComponent extends Object {
+class AnalyticsComponent extends Component {
 	var $propertyID = null;
 	var $pageView = null;
 	var $stack = array();
