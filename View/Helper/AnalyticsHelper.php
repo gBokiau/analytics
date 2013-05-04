@@ -23,7 +23,7 @@ class AnalyticsHelper extends AppHelper {
 			$pass = array('plugin'=>'Analytics', 'propertyID'=>$this->propertyID, 'stack'=> $this->stack);
 			if (isset($this->pageView))
 				$pass['pageView'] = $this->pageView;
-			return ClassRegistry::getObject('view')->element('analytics', $pass);
+			return $this->_View->element('Analytics.analytics', $pass);
 		} else {
 			return false;
 		}
