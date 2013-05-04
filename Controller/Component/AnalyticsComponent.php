@@ -1,4 +1,5 @@
 <?php
+App::uses('Component', 'Controller');
 class AnalyticsComponent extends Component {
 	var $propertyID = null;
 	var $pageView = null;
@@ -6,28 +7,24 @@ class AnalyticsComponent extends Component {
 	var $controller = null;
 
 	//called before Controller::beforeFilter()
-	function initialize(&$controller, $settings = null) {
-		if (is_array($settings)) {
-			$this->propertyID = $settings['id'];
-			unset($settings['id']);
-			$this->stack = $settings;
+	function initialize(Controller $controller) {
+		if (count($this->settings)>1) {
+			$this->propertyID = $this->settings['id'];
+			unset($this->settings['id']);
+			$this->stack = $this->settings;
 		} else {
-			$this->propertyID = $settings;
+			$this->propertyID = $this->settings[0];
 		}
-		$this->controller = &$controller;
-		$this->_attachHelper();
+		$controller->helpers['Analytics.Analytics'] = array('id'=>$this->propertyID);
 	}
-	function beforeRender() {
+	function beforeRender(Controller $controller) {
 		if (isset($this->pageView)) {
-			$this->controller->helpers['Analytics.Analytics']['pageView'] = $this->pageView;
+			$controller->helpers['Analytics.Analytics']['pageView'] = $this->pageView;
 		}
-		$this->controller->helpers['Analytics.Analytics']['stack'] = $this->stack;
+		$controller->helpers['Analytics.Analytics']['stack'] = $this->stack;
 	}
 	function push($what) {
 		$this->stack[] = $what;
-	}
-	function _attachHelper() {
-		$this->controller->helpers['Analytics.Analytics'] = array('id'=>$this->propertyID);
 	}
 }
 ?>

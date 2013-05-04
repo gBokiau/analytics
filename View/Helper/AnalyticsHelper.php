@@ -5,17 +5,17 @@ class AnalyticsHelper extends AppHelper {
 	var $stack = array();
 	var $helpers = array();
 
-	function __construct($View, $options) {
-		if (!is_array($options)) {
-			$this->propertyID = $options;
+	public function __construct(View $view, $settings = array()) {
+        parent::__construct($view, $settings);
+		if (!is_array($settings)) {
+			$this->propertyID = $settings;
 		} else {
-			$this->propertyID = $options['id'];
-			if (array_key_exists('pageView',$options)) {
-				$this->pageView = $options['pageView'];
+			$this->propertyID = $settings['id'];
+			if (array_key_exists('pageView', $settings)) {
+				$this->pageView = $settings['pageView'];
 			}
-			$this->stack = $options['stack'];
+			$this->stack = $settings['stack'];
 		}
-		return parent::__construct($options);
 	}
 
 	function writeScript() {
@@ -23,7 +23,6 @@ class AnalyticsHelper extends AppHelper {
 			$pass = array('propertyID'=>$this->propertyID, 'stack'=> $this->stack);
 			if (isset($this->pageView))
 				$pass['pageView'] = $this->pageView;
-			print_r($pass);
 			return $this->_View->element('Analytics.analytics', $pass);
 		} else {
 			return false;
