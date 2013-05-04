@@ -5,7 +5,7 @@ class AnalyticsHelper extends AppHelper {
 	var $stack = array();
 	var $helpers = array();
 
-	function __construct($options) {
+	function __construct($View, $options) {
 		if (!is_array($options)) {
 			$this->propertyID = $options;
 		} else {
@@ -20,9 +20,10 @@ class AnalyticsHelper extends AppHelper {
 
 	function writeScript() {
 		if($this->propertyID) {
-			$pass = array('plugin'=>'Analytics', 'propertyID'=>$this->propertyID, 'stack'=> $this->stack);
+			$pass = array('propertyID'=>$this->propertyID, 'stack'=> $this->stack);
 			if (isset($this->pageView))
 				$pass['pageView'] = $this->pageView;
+			print_r($pass);
 			return $this->_View->element('Analytics.analytics', $pass);
 		} else {
 			return false;
