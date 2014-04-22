@@ -1,7 +1,7 @@
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '<?=$propertyID?>']);
-<? if (isset($stack)) {
+<?php if (isset($stack)) {
 	foreach($stack as $command => $data) {
 		echo "  _gaq.push(['$command', '$data']);\n";
 	}
